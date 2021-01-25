@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # BEGIN config
-FORK_NAME="KBukkit"
+FORK_NAME="KPaper"
 API_REPO=""
 SERVER_REPO=""
 PAPER_API_REPO=""
