@@ -1,0 +1,180 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Tue, 19 Jan 2021 16:34:14 +0900
+Subject: [PATCH] Korean LANG 1.0
+
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 6c587077ba9145b768636d9e8dfe93a3ea01ee03..0fd381b683160ae69c465170d1a9e6d9b10e61f6 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -368,7 +368,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+         // CraftBukkit start - fire WorldLoadEvent and handle whether or not to keep the spawn in memory
+         for (int m = 0; m < worlds.size(); m++) {
+             WorldServer worldserver = this.worlds.get(m);
+-            MinecraftServer.LOGGER.info("Preparing start region for level " + m + " (Seed: " + worldserver.getSeed() + ")");
++            MinecraftServer.LOGGER.info("레벨 시작 영역 준비 " + m + " (시드: " + worldserver.getSeed() + ")");
+ 
+             if (!worldserver.getWorld().getKeepSpawnInMemory()) {
+                 continue;
+@@ -386,7 +386,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+                     long i1 = aw();
+ 
+                     if (i1 - j > 1000L) {
+-                        this.a_("Preparing spawn area", i * 100 / 625);
++                        this.a_("레벨 시작 영역 준비중 ", i * 100 / 625);
+                         j = i1;
+                     }
+ 
+@@ -453,7 +453,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+ 
+             if (worldserver != null) {
+                 if (!flag) {
+-                    MinecraftServer.LOGGER.info("Saving chunks for level \'{}\'/{}", worldserver.getWorldData().getName(), worldserver.worldProvider.getDimensionManager().b());
++                    MinecraftServer.LOGGER.info("청크 저장 중 \'{}\'/{}", worldserver.getWorldData().getName(), worldserver.worldProvider.getDimensionManager().b());
+                 }
+ 
+                 try {
+@@ -479,7 +479,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+             hasStopped = true;
+         }
+         // CraftBukkit end
+-        MinecraftServer.LOGGER.info("Stopping server");
++        MinecraftServer.LOGGER.info("서버 정지 중...");
+         MinecraftTimings.stopServer(); // Paper
+         // CraftBukkit start
+         if (this.server != null) {
+@@ -491,14 +491,14 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+         }
+ 
+         if (this.v != null) {
+-            MinecraftServer.LOGGER.info("Saving players");
++            MinecraftServer.LOGGER.info("플레이어 저장 중...");
+             this.v.savePlayers();
+             this.v.u(isRestarting);
+             try { Thread.sleep(100); } catch (InterruptedException ex) {} // CraftBukkit - SPIGOT-625 - give server at least a chance to send packets
+         }
+ 
+         if (this.worldServer != null) {
+-            MinecraftServer.LOGGER.info("Saving worlds");
++            MinecraftServer.LOGGER.info("월드 저장 중...");
+             WorldServer[] aworldserver = this.worldServer;
+             int i = aworldserver.length;
+ 
+@@ -532,7 +532,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+ 
+         // Spigot start
+         if (org.spigotmc.SpigotConfig.saveUserCacheOnStopOnly) {
+-            LOGGER.info("Saving usercache.json");
++            LOGGER.info("usercache.json 저장 중...");
+             this.Y.c(false); // Paper
+         }
+         // Spigot end
+diff --git a/src/main/java/org/spigotmc/RestartCommand.java b/src/main/java/org/spigotmc/RestartCommand.java
+index f15fd9f3701ec786271b11f5e36a5499e877b043..3b100d9df4bcdf1837c661eaf4d40f3c419cde6c 100644
+--- a/src/main/java/org/spigotmc/RestartCommand.java
++++ b/src/main/java/org/spigotmc/RestartCommand.java
+@@ -49,9 +49,9 @@ public class RestartCommand extends Command
+             // Paper - extract method and cleanup
+             boolean isRestarting = addShutdownHook(script);
+             if (isRestarting) {
+-                System.out.println("Attempting to restart with " + SpigotConfig.restartScript);
++                System.out.println("리스타트 스크립트 : " + SpigotConfig.restartScript);
+             } else {
+-                System.out.println( "Startup script '" + SpigotConfig.restartScript + "' does not exist! Stopping server." );
++                System.out.println( "시작 스크립트 '" + SpigotConfig.restartScript + "'를(을)찾지 못했습니다. 서버를 정 지합니다.." );
+             }
+ 
+             // Stop the watchdog
+diff --git a/src/main/java/org/spigotmc/SpigotCommand.java b/src/main/java/org/spigotmc/SpigotCommand.java
+index fdb030c7af3a63769302391a0aab6ad10f77fb30..20277cd55c27734a0aec89764113bc23176929b4 100644
+--- a/src/main/java/org/spigotmc/SpigotCommand.java
++++ b/src/main/java/org/spigotmc/SpigotCommand.java
+@@ -26,8 +26,8 @@ public class SpigotCommand extends Command {
+         }
+ 
+         if (args[0].equals("reload")) {
+-            Command.broadcastCommandMessage(sender, ChatColor.RED + "Please note that this command is not supported and may cause issues.");
+-            Command.broadcastCommandMessage(sender, ChatColor.RED + "If you encounter any issues please use the /stop command to restart your server.");
++            Command.broadcastCommandMessage(sender, ChatColor.RED + "리로드 기능을 지원하지 않는 플러그인이 있을수있습니다.");
++            Command.broadcastCommandMessage(sender, ChatColor.RED + "문제가 발생한다면 /stop으로 서버를 중단하고 재시작해주세요");
+ 
+             MinecraftServer console = MinecraftServer.getServer();
+             org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings"));
+@@ -36,7 +36,7 @@ public class SpigotCommand extends Command {
+             }
+             console.server.reloadCount++;
+ 
+-            Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Reload complete.");
++            Command.broadcastCommandMessage(sender, ChatColor.GREEN + "리로드 완료!");
+         }
+ 
+         return true;
+diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
+index 93dc6983595ace9fa0d024ffbb11e4b98b5fe886..fca6517cb7f36445555867a044f527623b83a1ac 100644
+--- a/src/main/java/org/spigotmc/WatchdogThread.java
++++ b/src/main/java/org/spigotmc/WatchdogThread.java
+@@ -24,7 +24,7 @@ public class WatchdogThread extends Thread
+ 
+     private WatchdogThread(long timeoutTime, boolean restart)
+     {
+-        super( "Paper Watchdog Thread" );
++        super( "KPaper 와치독 스레드" );
+         this.timeoutTime = timeoutTime;
+         this.restart = restart;
+         earlyWarningEvery = Math.min(PaperConfig.watchdogPrintEarlyWarningEvery, timeoutTime); // Paper
+@@ -72,10 +72,10 @@ public class WatchdogThread extends Thread
+                 // Paper start - Different message when it's a short timeout
+                 if ( isLongTimeout )
+                 {
+-                log.log( Level.SEVERE, "The server has stopped responding!" );
+-                log.log( Level.SEVERE, "Please report this to https://github.com/PaperMC/Paper/issues" );
+-                log.log( Level.SEVERE, "Be sure to include ALL relevant console errors and Minecraft crash reports" );
+-                log.log( Level.SEVERE, "Paper version: " + Bukkit.getServer().getVersion() );
++                log.log( Level.SEVERE, "서버가 응답을 멈췄습니다!" );
++                //log.log( Level.SEVERE, "Please report this to https://github.com/PaperMC/Paper/issues" );
++                //log.log( Level.SEVERE, "Be sure to include ALL relevant console errors and Minecraft crash reports" );
++                log.log( Level.SEVERE, "KPaper 버전 : " + Bukkit.getServer().getVersion() );
+                 //
+                 if(net.minecraft.server.World.haveWeSilencedAPhysicsCrash)
+                 {
+@@ -98,8 +98,8 @@ public class WatchdogThread extends Thread
+                 // Paper end
+                 } else
+                 {
+-                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH ---");
+-                    log.log(Level.SEVERE, "The server has not responded for " + (currentTime - lastTick) / 1000 + " seconds! Creating thread dump");
++                    log.log(Level.SEVERE, "--- KPaper팀에게 제보하지 마세요 - 버그나 크래시가 아닙니다 ---");
++                    log.log(Level.SEVERE, "서버가 " + (currentTime - lastTick) / 1000 + " 초 동안 응답하지 않았습니다. 쓰레드 덤프를 생성합니다.");
+                 }
+                 // Paper end - Different message for short timeout
+                 log.log( Level.SEVERE, "------------------------------" );
+@@ -117,7 +117,7 @@ public class WatchdogThread extends Thread
+                     dumpThread( thread, log );
+                 }
+                 } else {
+-                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH ---");
++                    log.log(Level.SEVERE, "--- KPAPER팀에게 제보하지 말아주세요 - 버그나 크래쉬가 아닙니다. ---");
+                 }
+ 
+ 
+@@ -147,8 +147,8 @@ public class WatchdogThread extends Thread
+     {
+         log.log( Level.SEVERE, "------------------------------" );
+         //
+-        log.log( Level.SEVERE, "Current Thread: " + thread.getThreadName() );
+-        log.log( Level.SEVERE, "\tPID: " + thread.getThreadId()
++        log.log( Level.SEVERE, "현재 쓰레드 : " + thread.getThreadName() );
++        log.log( Level.SEVERE, "\t프로세스 ID : " + thread.getThreadId()
+                 + " | Suspended: " + thread.isSuspended()
+                 + " | Native: " + thread.isInNative()
+                 + " | State: " + thread.getThreadState() );
+@@ -160,7 +160,7 @@ public class WatchdogThread extends Thread
+                 log.log( Level.SEVERE, "\t\tLocked on:" + monitor.getLockedStackFrame() );
+             }
+         }
+-        log.log( Level.SEVERE, "\tStack:" );
++        log.log( Level.SEVERE, "\t스택 :" );
+         //
+         for ( StackTraceElement stack : thread.getStackTrace() )
+         {

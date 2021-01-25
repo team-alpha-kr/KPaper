@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Tue, 19 Jan 2021 14:16:20 +0900
+Subject: [PATCH] pom
+
+
+diff --git a/pom.xml b/pom.xml
+index 2fa2dd7c71e4f24f60e415c38ccf734c78713cbb..9ec61f14d05614d72ec645b17472f34673f299da 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -4,18 +4,18 @@
+     <modelVersion>4.0.0</modelVersion>
+ 
+     <parent>
+-        <groupId>com.destroystokyo.paper</groupId>
+-        <artifactId>paper-parent</artifactId>
++        <groupId>com.kpaper</groupId>
++        <artifactId>kpaper-parent</artifactId>
+         <version>dev-SNAPSHOT</version>
+     </parent>
+ 
+-    <groupId>com.destroystokyo.paper</groupId>
+-    <artifactId>paper-api</artifactId>
++    <groupId>com.kpaper</groupId>
++    <artifactId>kpaper-api</artifactId>
+     <version>1.12.2-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>Paper-API</name>
+-    <url>https://github.com/PaperMC/Paper</url>
++    <name>KPaper-API</name>
++    <url>https://github.com/KPaper/Paper</url>
+     <description>An enhanced plugin API for Minecraft servers.</description>
+ 
+     <properties>

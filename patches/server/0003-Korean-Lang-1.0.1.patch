@@ -1,0 +1,104 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Tue, 19 Jan 2021 20:01:41 +0900
+Subject: [PATCH] Korean Lang 1.0.1
+
+
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index e545e9764a4aa117896ca1b3e55d2613642d7244..bf3d7a74d0edf2e65c75f70f4f98a81729f17428 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -1068,12 +1068,12 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+             timings.worldSave.startTiming(); // Paper
+             if (flag || server.serverAutoSave) { // Paper
+             if (iprogressupdate != null) {
+-                iprogressupdate.a("Saving level");
++                iprogressupdate.a("레벨 저장 중...");
+             }
+ 
+             this.a();
+             if (iprogressupdate != null) {
+-                iprogressupdate.c("Saving chunks");
++                iprogressupdate.c("청크 저장 중...");
+             }
+             } // Paper
+ 
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 55dbc3a327a37f719502040dd3a1874143d247cb..93d7932917fa083bcd25219de9f30264e8944c41 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -318,11 +318,11 @@ public final class CraftServer implements Server {
+             Plugin[] plugins = pluginManager.loadPlugins(pluginFolder);
+             for (Plugin plugin : plugins) {
+                 try {
+-                    String message = String.format("Loading %s", plugin.getDescription().getFullName());
++                    String message = String.format("로딩 중 %s", plugin.getDescription().getFullName());
+                     plugin.getLogger().info(message);
+                     plugin.onLoad();
+                 } catch (Throwable ex) {
+-                    Logger.getLogger(CraftServer.class.getName()).log(Level.SEVERE, ex.getMessage() + " initializing " + plugin.getDescription().getFullName() + " (Is it up to date?)", ex);
++                    Logger.getLogger(CraftServer.class.getName()).log(Level.SEVERE, ex.getMessage() + " 초기화 중 " + plugin.getDescription().getFullName() + " (최신버전입니까?)", ex);
+                 }
+             }
+         } else {
+@@ -387,14 +387,14 @@ public final class CraftServer implements Server {
+                 try {
+                     pluginManager.addPermission(perm, false);
+                 } catch (IllegalArgumentException ex) {
+-                    getLogger().log(Level.WARNING, "Plugin " + plugin.getDescription().getFullName() + " tried to register permission '" + perm.getName() + "' but it's already registered", ex);
++                    getLogger().log(Level.WARNING, "플러그인 " + plugin.getDescription().getFullName() + " 펄미션  '" + perm.getName() + "'은 이미 등록되었습니다.", ex);
+                 }
+             }
+             pluginManager.dirtyPermissibles();
+ 
+             pluginManager.enablePlugin(plugin);
+         } catch (Throwable ex) {
+-            Logger.getLogger(CraftServer.class.getName()).log(Level.SEVERE, ex.getMessage() + " loading " + plugin.getDescription().getFullName() + " (Is it up to date?)", ex);
++            Logger.getLogger(CraftServer.class.getName()).log(Level.SEVERE, ex.getMessage() + " 로딩 중 " + plugin.getDescription().getFullName() + " (최신버전입니까?)", ex);
+         }
+     }
+ 
+@@ -976,7 +976,7 @@ public final class CraftServer implements Server {
+         console.worlds.add(internal);
+ 
+         pluginManager.callEvent(new WorldInitEvent(internal.getWorld()));
+-        System.out.println("Preparing start region for level " + (console.worlds.size() - 1) + " (Seed: " + internal.getSeed() + ")");
++        System.out.println("시작 지역 로딩 중 " + (console.worlds.size() - 1) + " (시드: " + internal.getSeed() + ")");
+ 
+         if (internal.getWorld().getKeepSpawnInMemory()) {
+             short short1 = internal.paperConfig.keepLoadedRange; // Paper
+@@ -993,7 +993,7 @@ public final class CraftServer implements Server {
+                         int i1 = (short1 * 2 + 1) * (short1 * 2 + 1);
+                         int j1 = (j + short1) * (short1 * 2 + 1) + k + 1;
+ 
+-                        System.out.println("Preparing spawn area for " + name + ", " + (j1 * 100 / i1) + "%");
++                        System.out.println("시작 지역 로딩중 ㅑ " + name + ", " + (j1 * 100 / i1) + "%");
+                         i = l;
+                     }
+ 
+@@ -1429,14 +1429,14 @@ public final class CraftServer implements Server {
+ 
+     @Override
+     public void banIP(String address) {
+-        Validate.notNull(address, "Address cannot be null.");
++        Validate.notNull(address, "IP주소가 없습니다.");
+ 
+         this.getBanList(org.bukkit.BanList.Type.IP).addBan(address, null, null, null);
+     }
+ 
+     @Override
+     public void unbanIP(String address) {
+-        Validate.notNull(address, "Address cannot be null.");
++        Validate.notNull(address, "IP주소가 없습니다.");
+ 
+         this.getBanList(org.bukkit.BanList.Type.IP).pardon(address);
+     }
+@@ -1947,7 +1947,7 @@ public final class CraftServer implements Server {
+         } catch (FileNotFoundException ex) {
+             return false;
+         } catch (IOException | org.bukkit.configuration.InvalidConfigurationException ex) {
+-            Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
++            Bukkit.getLogger().log(Level.SEVERE, "다음을 로드하지 못했습니다. " + file, ex);
+             return false;
+         }
+         commandMap.registerServerAliases();
