@@ -1,0 +1,58 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Tue, 26 Jan 2021 19:19:18 +0900
+Subject: [PATCH] Version Fetcher
+
+
+diff --git a/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java b/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
+index 49a38c6608b652ff48ef4eaca0dd3ccb1ba570e3..04bb2fbce24123c26f575fa6a034ed60b9223019 100644
+--- a/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
++++ b/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
+@@ -24,8 +24,8 @@ public class PaperVersionFetcher implements VersionFetcher {
+     @Nonnull
+     @Override
+     public String getVersionMessage(@Nonnull String serverVersion) {
+-        String[] parts = serverVersion.substring("git-Paper-".length()).split("[-\\s]");
+-        String updateMessage = getUpdateStatusMessage("PaperMC/Paper", GITHUB_BRANCH_NAME, parts[0]);
++        String[] parts = serverVersion.substring("git-KPaper-".length()).split("[-\\s]");
++        String updateMessage = getUpdateStatusMessage("team-alpha-kr/KPaper", GITHUB_BRANCH_NAME, parts[0]);
+         String history = getHistory();
+ 
+         return history != null ? history + "\n" + updateMessage : updateMessage;
+@@ -49,23 +49,23 @@ public class PaperVersionFetcher implements VersionFetcher {
+ 
+     private static String getUpdateStatusMessage(@Nonnull String repo, @Nonnull String branch, @Nonnull String versionInfo) {
+         int distance;
+-        try {
++        /*try {
+             int jenkinsBuild = Integer.parseInt(versionInfo);
+             distance = fetchDistanceFromSiteApi(jenkinsBuild, getMinecraftVersion());
+-        } catch (NumberFormatException ignored) {
++        } catch (NumberFormatException ignored) {*/
+             versionInfo = versionInfo.replace("\"", "");
+             distance = fetchDistanceFromGitHub(repo, branch, versionInfo);
+-        }
++       //}
+ 
+         switch (distance) {
+             case -1:
+                 return "Error obtaining version information";
+             case 0:
+-                return "You are running the latest version";
++                return "최신버전을 실행하고 있습니다!";
+             case -2:
+                 return "Unknown version";
+             default:
+-                return "You are " + distance + " version(s) behind";
++                return "이 서버는 " + distance + " 개의 버전이 밀려있어요!";
+         }
+     }
+ 
+@@ -128,6 +128,6 @@ public class PaperVersionFetcher implements VersionFetcher {
+             return null;
+         }
+ 
+-        return "Previous version: " + oldVersion;
++        return "전 버전 : " + oldVersion;
+     }
+ }
