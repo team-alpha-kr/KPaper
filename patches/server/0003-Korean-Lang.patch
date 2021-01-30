@@ -39,10 +39,10 @@ index c6ea429819c07e7f4bc257cad73463a030767825..784f0ac5230badd14b420267a528d713
          }
      }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2feace2abd6d44525a449b1e1f75931f6d8cbf72..2d198ed5b60e18e540348ce8cb91aab3e315a54a 100644
+index 6854a0a25f7631f3f746b36264fe4bb592cf2667..2cc950f20f89e031ff11925e5c96f20f4135fbe7 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -940,14 +940,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -941,14 +941,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
                  // Spigot start
                  // Paper start - move done tracking
@@ -59,7 +59,7 @@ index 2feace2abd6d44525a449b1e1f75931f6d8cbf72..2d198ed5b60e18e540348ce8cb91aab3
                  // Paper end
  
                  PaperJvmChecker.checkJvm(); // Paper jvm version nag
-@@ -963,7 +963,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -964,7 +964,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                          long j = i / 50L;
  
                          if (server.getWarnOnOverload()) // CraftBukkit
@@ -68,7 +68,7 @@ index 2feace2abd6d44525a449b1e1f75931f6d8cbf72..2d198ed5b60e18e540348ce8cb91aab3
                          this.nextTick += j * 50L;
                          this.lastOverloadTime = this.nextTick;
                      }
-@@ -1448,7 +1448,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1450,7 +1450,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
