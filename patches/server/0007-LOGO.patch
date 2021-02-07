@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Mon, 8 Feb 2021 00:41:48 +0900
+Subject: [PATCH] LOGO
+
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 2cc950f20f89e031ff11925e5c96f20f4135fbe7..9b6279c935456c4c3ba9ea4fd339d70e5e163d09 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -948,7 +948,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+                 // anything at 3+ won't be caught here but also will trip watchdog....
+                 // tasks are default scheduled at -1 + delay, and first tick will tick at 1
+                 String doneTime = String.format(java.util.Locale.ROOT, "%.3fs", (double) (SystemUtils.getMonotonicNanos() - serverStartTime) / 1.0E9D);
+-                LOGGER.info("부팅 완료 ({})! ", doneTime);
++                LOGGER.info("********************************")
++		LOGGER.info("*")
++		LOGGER.info("*           KPAPER")
++		LOGGER.info("*")
++		LOGGER.info("* 현재 상태 : [ 부팅 완료 ]")
++		LOGGER.info("********************************").
+                 // Paper end
+ 
+                 PaperJvmChecker.checkJvm(); // Paper jvm version nag
