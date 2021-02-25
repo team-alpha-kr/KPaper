@@ -84,6 +84,7 @@ case "$1" in
     (
         cd "$basedir"
         scripts/upstream.sh "$2"
+        scripts/upstreaCommit.sh
     )
     ;;
     "r" | "root")

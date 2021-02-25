@@ -12,10 +12,10 @@ paper=$(changelog Paper)
 updated=""
 logsuffix=""
 if [ ! -z "$paper" ]; then
-    logsuffix="$logsuffix\n\nPaper Changes:\n$paper"
+    logsuffix="$logsuffix\n\nPaper 변경:\n$paper"
     if [ -z "$updated" ]; then updated="Paper"; else updated="$updated/Paper"; fi
 fi
-disclaimer="Upstream has released updates that appears to apply and compile correctly"
+disclaimer="업스트림에서 새로운 패치를 배포하였습니다."
 
 if [ ! -z "$1" ]; then
     disclaimer="$@"
