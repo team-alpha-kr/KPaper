@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Tue, 26 Jan 2021 19:58:35 +0900
+Subject: [PATCH] BUG FIX
+
+
+diff --git a/src/main/java/io/papermc/paper/util/PaperJvmChecker.java b/src/main/java/io/papermc/paper/util/PaperJvmChecker.java
+index 784f0ac5230badd14b420267a528d71302cf4245..2aadcf118ae9a8171d239cc5d90d850e615a0f34 100644
+--- a/src/main/java/io/papermc/paper/util/PaperJvmChecker.java
++++ b/src/main/java/io/papermc/paper/util/PaperJvmChecker.java
+@@ -37,7 +37,7 @@ public class PaperJvmChecker {
+             logger.warn("* ");
+             /*logger.warn("* released support for versions of Java before 11 will");
+             logger.warn("* be dropped.");
+-            */logger.warn("*")
++            */logger.warn("*");
+             logger.warn("* 현재 버전: {}", System.getProperty("java.version"));
+             logger.warn("*");
+             /*logger.warn("* Check this forum post for more information: ");

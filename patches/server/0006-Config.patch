@@ -1,0 +1,223 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TreeKR <johanbag290@gmail.com>
+Date: Sat, 30 Jan 2021 13:29:29 +0900
+Subject: [PATCH] Config
+
+
+diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
+index 5504facd2e453238caa71d98743be5416d4dd4fe..00a29f4ecb8843ac4f213e6cbc049e7c14e64fcd 100644
+--- a/src/main/java/net/minecraft/server/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/DedicatedServer.java
+@@ -30,6 +30,7 @@ import co.aikar.timings.MinecraftTimings; // Paper
+ import org.bukkit.event.server.ServerCommandEvent;
+ import org.bukkit.craftbukkit.util.Waitable;
+ import org.bukkit.event.server.RemoteServerCommandEvent;
++import xyz.alphakr.kpaper.KPaperConfig;
+ // CraftBukkit end
+ 
+ public class DedicatedServer extends MinecraftServer implements IMinecraftServer {
+@@ -162,6 +163,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+         // Paper start
+         try {
+             com.destroystokyo.paper.PaperConfig.init((java.io.File) options.valueOf("paper-settings"));
++            KPaperConfig.init((java.io.File) options.valueOf("kpaper-settings"));
+         } catch (Exception e) {
+             DedicatedServer.LOGGER.error("Unable to load server configuration", e);
+             return false;
+diff --git a/src/main/java/net/minecraft/server/Main.java b/src/main/java/net/minecraft/server/Main.java
+index 1c6dbd29c8414b3e33aedcc50bee5b5d9ce134d1..93ae286d61308975c2ecaf3fa748abf043410bf9 100644
+--- a/src/main/java/net/minecraft/server/Main.java
++++ b/src/main/java/net/minecraft/server/Main.java
+@@ -70,6 +70,10 @@ public class Main {
+             org.bukkit.configuration.file.YamlConfiguration paperConfiguration = loadConfigFile((File) optionset.valueOf("paper-settings"));
+             // Paper end
+ 
++            // KPaper start - load config files
++            org.bukkit.configuration.file.YamlConfiguration kpaperConfiguration = loadConfigFile((File) optionset.valueOf("kpaper-settings"));
++            // KPaper end
++
+             java.nio.file.Path java_nio_file_path1 = Paths.get("eula.txt");
+             EULA eula = new EULA(java_nio_file_path1);
+ 
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 522dfcd59dad09c934f4c497e20449e471c9c1cd..ff961c6df72501738e473671c6f0b3af645a1623 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -226,6 +226,7 @@ import org.yaml.snakeyaml.constructor.SafeConstructor;
+ import org.yaml.snakeyaml.error.MarkedYAMLException;
+ 
+ import net.md_5.bungee.api.chat.BaseComponent; // Spigot
++import xyz.alphakr.kpaper.KPaperConfig;
+ 
+ import javax.annotation.Nullable; // Paper
+ import javax.annotation.Nonnull; // Paper
+@@ -860,6 +861,7 @@ public final class CraftServer implements Server {
+ 
+         org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
+         com.destroystokyo.paper.PaperConfig.init((File) console.options.valueOf("paper-settings")); // Paper
++        KPaperConfig.init((java.io.File) console.options.valueOf("kpaper-settings")); // KPaper
+         for (WorldServer world : console.getWorlds()) {
+             world.worldDataServer.setDifficulty(config.difficulty);
+             world.setSpawnFlags(config.spawnMonsters, config.spawnAnimals);
+diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
+index 1c834b3e72080b7c190829580b14961208c538b0..aceb9e2d79cc4497c153b7c12e7aa4349d4005a2 100644
+--- a/src/main/java/org/bukkit/craftbukkit/Main.java
++++ b/src/main/java/org/bukkit/craftbukkit/Main.java
+@@ -139,6 +139,14 @@ public class Main {
+                         .describedAs("Yml file");
+                 // Paper end
+ 
++                // KPaper start
++                acceptsAll(asList("kpaper", "kpaper-settings"), "File for kpaper settings")
++                        .withRequiredArg()
++                        .ofType(File.class)
++                        .defaultsTo(new File("kpaper.yml"))
++                        .describedAs("Yml file");
++                // KPaper end
++
+                 // Paper start
+                 acceptsAll(asList("server-name"), "Name of the server")
+                         .withRequiredArg()
+diff --git a/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java b/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..816fe77d83aa36e84e5cfd39c7e98aeedb4a9985
+--- /dev/null
++++ b/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java
+@@ -0,0 +1,137 @@
++package xyz.alphakr.kpaper;
++
++import com.google.common.base.Throwables;
++import org.bukkit.Bukkit;
++import org.bukkit.command.Command;
++import org.bukkit.configuration.InvalidConfigurationException;
++import org.bukkit.configuration.file.YamlConfiguration;
++
++import java.io.File;
++import java.io.IOException;
++import java.lang.reflect.InvocationTargetException;
++import java.lang.reflect.Method;
++import java.lang.reflect.Modifier;
++import java.util.List;
++import java.util.Map;
++import java.util.logging.Level;
++
++public class KPaperConfig {
++    private static File CONFIG_FILE;
++    private static final String HEADER = "KPaper을 사용해주셔서 감사합니다!\n" +
++            "이것은 KPaper의 설정 파일입니다.\n" +
++            "KPaper에 대한 설정을 하실수 있습니다.\n" +
++            "\n" +
++            "KPaper 서포트 서버: https://discord.gg/azYU6GU\n" +
++            "\n" +
++            "Made by norhu1130(Dev-Star) and NamuTree0345";
++    /*========================================================================*/
++    public static YamlConfiguration config;
++    static int version;
++    static Map<String, Command> commands;
++    private static boolean verbose;
++    private static boolean fatalError;
++    /*========================================================================*/
++    private static boolean metricsStarted;
++
++    public static void init(File configFile) {
++        CONFIG_FILE = configFile;
++        config = new YamlConfiguration();
++        try {
++            config.load(CONFIG_FILE);
++        } catch (IOException ex) {
++        } catch (InvalidConfigurationException ex) {
++            Bukkit.getLogger().log(Level.SEVERE, "kpaper.yml을 불러오지 못했습니다. YML 문법을 확인해주세요.", ex);
++            throw Throwables.propagate(ex);
++        }
++        config.options().header(HEADER);
++        config.options().copyDefaults(true);
++        verbose = getBoolean("verbose", false);
++
++        version = getInt("config-version", 20);
++        set("config-version", 20);
++        readConfig(KPaperConfig.class, null);
++    }
++
++    static void readConfig(Class<?> clazz, Object instance) {
++        for (Method method : clazz.getDeclaredMethods()) {
++            if (Modifier.isPrivate(method.getModifiers())) {
++                if (method.getParameterTypes().length == 0 && method.getReturnType() == Void.TYPE) {
++                    try {
++                        method.setAccessible(true);
++                        method.invoke(instance);
++                    } catch (InvocationTargetException ex) {
++                        throw Throwables.propagate(ex.getCause());
++                    } catch (Exception ex) {
++                        Bukkit.getLogger().log(Level.SEVERE, "Error invoking " + method, ex);
++                    }
++                }
++            }
++        }
++
++        try {
++            config.save(CONFIG_FILE);
++        } catch (IOException ex) {
++            Bukkit.getLogger().log(Level.SEVERE, "Could not save " + CONFIG_FILE, ex);
++        }
++    }
++
++    protected static void logError(String s) {
++        Bukkit.getLogger().severe(s);
++    }
++
++    protected static void fatal(String s) {
++        fatalError = true;
++        throw new RuntimeException("심각한 kpaper.yml 오류: " + s);
++    }
++
++    protected static void log(String s) {
++        if (verbose) {
++            Bukkit.getLogger().info(s);
++        }
++    }
++
++    private static void set(String path, Object val) {
++        config.set(path, val);
++    }
++
++    private static boolean getBoolean(String path, boolean def) {
++        config.addDefault(path, def);
++        return config.getBoolean(path, config.getBoolean(path));
++    }
++
++    private static double getDouble(String path, double def) {
++        config.addDefault(path, def);
++        return config.getDouble(path, config.getDouble(path));
++    }
++
++    private static float getFloat(String path, float def) {
++        // TODO: Figure out why getFloat() always returns the default value.
++        return (float) getDouble(path, (double) def);
++    }
++
++    private static int getInt(String path, int def) {
++        config.addDefault(path, def);
++        return config.getInt(path, config.getInt(path));
++    }
++
++    private static <T> List getList(String path, T def) {
++        config.addDefault(path, def);
++        return (List<T>) config.getList(path, config.getList(path));
++    }
++
++    private static String getString(String path, String def) {
++        config.addDefault(path, def);
++        return config.getString(path, config.getString(path));
++    }
++
++    /*
++    public static int packetInSpamThreshold = 300;
++    private static void packetInSpamThreshold() {
++        if (version < 11) {
++            int oldValue = getInt("settings.play-in-use-item-spam-threshold", 300);
++            set("settings.incoming-packet-spam-threshold", oldValue);
++        }
++        packetInSpamThreshold = getInt("settings.incoming-packet-spam-threshold", 300);
++    }
++     */
++}

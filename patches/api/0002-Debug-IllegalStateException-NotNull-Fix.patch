@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TreeKR <johanbag290@gmail.com>
+Date: Sat, 30 Jan 2021 11:20:33 +0900
+Subject: [PATCH] Debug IllegalStateException NotNull Fix
+
+
+diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
+index fecd7b14d317f55eb1ce7b5c6af9913917971427..ce5a1fb5613195fd66a994911dd1d89e67795034 100644
+--- a/src/main/java/org/bukkit/Bukkit.java
++++ b/src/main/java/org/bukkit/Bukkit.java
+@@ -67,7 +67,7 @@ public final class Bukkit {
+      *
+      * @return Server instance being ran
+      */
+-    @NotNull
++
+     public static Server getServer() {
+         return server;
+     }

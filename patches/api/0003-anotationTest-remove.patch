@@ -1,0 +1,18 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TreeKR <johanbag290@gmail.com>
+Date: Sat, 30 Jan 2021 13:42:13 +0900
+Subject: [PATCH] anotationTest remove
+
+
+diff --git a/src/test/java/org/bukkit/AnnotationTest.java b/src/test/java/org/bukkit/AnnotationTest.java
+index 4c2780c903ec354edac741b673a7174284a9849a..bd003b1f658bceb1830a719df103ed9956ccb136 100644
+--- a/src/test/java/org/bukkit/AnnotationTest.java
++++ b/src/test/java/org/bukkit/AnnotationTest.java
+@@ -27,7 +27,6 @@ public class AnnotationTest {
+ 
+     private static final String[] ACCEPTED_ANNOTATIONS = {
+         "Lorg/jetbrains/annotations/Nullable;",
+-        "Lorg/jetbrains/annotations/NotNull;",
+         "Lorg/jetbrains/annotations/Contract;",
+         "Lorg/bukkit/UndefinedNullability;"
+     };
