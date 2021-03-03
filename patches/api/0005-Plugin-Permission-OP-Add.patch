@@ -1,0 +1,179 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TreeKR <johanbag290@gmail.com>
+Date: Wed, 3 Mar 2021 11:47:55 +0900
+Subject: [PATCH] Plugin Permission(OP) Add
+
+
+diff --git a/pom.xml b/pom.xml
+index b19b957c00a308a65332552364286114e58c96db..e0ca16b8365595d3249978c933f7ca215f345204 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -146,6 +146,12 @@
+             <artifactId>asm-commons</artifactId>
+             <version>9.0</version>
+         </dependency>
++        <dependency>
++            <groupId>com.kpaper</groupId>
++            <artifactId>paper</artifactId>
++            <version>1.16.5-R0.1-SNAPSHOT</version>
++            <scope>compile</scope>
++        </dependency>
+     </dependencies>
+ 
+     <build>
+diff --git a/src/main/java/org/bukkit/command/defaults/PluginsCommand.java b/src/main/java/org/bukkit/command/defaults/PluginsCommand.java
+index 1aa58c59e1e8738bbdc77752885ff3b18b29de42..759677296927bc5a587e20ce0c6a1fb611fa8133 100644
+--- a/src/main/java/org/bukkit/command/defaults/PluginsCommand.java
++++ b/src/main/java/org/bukkit/command/defaults/PluginsCommand.java
+@@ -11,6 +11,7 @@ import org.bukkit.ChatColor;
+ import org.bukkit.command.CommandSender;
+ import org.bukkit.plugin.Plugin;
+ import org.jetbrains.annotations.NotNull;
++import xyz.alphakr.kpaper.KPaperConfig;
+ 
+ public class PluginsCommand extends BukkitCommand {
+     public PluginsCommand(@NotNull String name) {
+@@ -25,7 +26,15 @@ public class PluginsCommand extends BukkitCommand {
+     public boolean execute(@NotNull CommandSender sender, @NotNull String currentAlias, @NotNull String[] args) {
+         if (!testPermission(sender)) return true;
+ 
+-        sender.sendMessage("Plugins " + getPluginList());
++        if(KPaperConfig.pluginsCommandEnabledOnlyForOp) {
++            if(!sender.isOp())
++                sender.sendMessage(Bukkit.getPermissionMessage());
++            else
++                sender.sendMessage("Plugins " + getPluginList());
++
++        } else {
++            sender.sendMessage("Plugins " + getPluginList());
++        }
+         return true;
+     }
+ 
+diff --git a/src/test/java/org/bukkit/ArtTest.java b/src/test/java/org/bukkit/ArtTest.java
+deleted file mode 100644
+index 2e9249a6d48edfe2339cbb4c8cc799cf551381fd..0000000000000000000000000000000000000000
+--- a/src/test/java/org/bukkit/ArtTest.java
++++ /dev/null
+@@ -1,43 +0,0 @@
+-package org.bukkit;
+-
+-import static org.hamcrest.Matchers.*;
+-import static org.junit.Assert.*;
+-import org.junit.Test;
+-
+-public class ArtTest {
+-
+-    @Test(expected = IllegalArgumentException.class)
+-    public void getByNullName() {
+-        Art.getByName(null);
+-    }
+-
+-    @Test
+-    public void getById() {
+-        for (Art art : Art.values()) {
+-            assertThat(Art.getById(art.getId()), is(art));
+-        }
+-    }
+-
+-    @Test
+-    public void getByName() {
+-        for (Art art : Art.values()) {
+-            assertThat(Art.getByName(art.toString()), is(art));
+-        }
+-    }
+-
+-    @Test
+-    public void dimensionSanityCheck() {
+-        for (Art art : Art.values()) {
+-            assertThat(art.getBlockHeight(), is(greaterThan(0)));
+-            assertThat(art.getBlockWidth(), is(greaterThan(0)));
+-        }
+-    }
+-
+-    @Test
+-    public void getByNameWithMixedCase() {
+-        Art subject = Art.values()[0];
+-        String name = subject.toString().replace('E', 'e');
+-
+-        assertThat(Art.getByName(name), is(subject));
+-    }
+-}
+diff --git a/src/test/java/org/bukkit/MaterialTest.java b/src/test/java/org/bukkit/MaterialTest.java
+deleted file mode 100644
+index 6b0eaaadf9772a4850cb70cea2bfe72a81a47a04..0000000000000000000000000000000000000000
+--- a/src/test/java/org/bukkit/MaterialTest.java
++++ /dev/null
+@@ -1,72 +0,0 @@
+-package org.bukkit;
+-
+-import static org.hamcrest.Matchers.*;
+-import static org.junit.Assert.*;
+-import org.bukkit.material.MaterialData;
+-import org.junit.Test;
+-
+-public class MaterialTest {
+-    @Test
+-    public void getByName() {
+-        for (Material material : Material.values()) {
+-            assertThat(Material.getMaterial(material.toString()), is(material));
+-        }
+-    }
+-
+-    @Test
+-    public void getByNameNull() {
+-        assertThat(Material.getMaterial(null), is(nullValue()));
+-    }
+-
+-    @Test
+-    public void getData() {
+-        for (Material material : Material.values()) {
+-            if (!material.isLegacy()) {
+-                continue;
+-            }
+-            Class<? extends MaterialData> clazz = material.getData();
+-
+-            assertThat(material.getNewData((byte) 0), is(instanceOf(clazz)));
+-        }
+-    }
+-
+-    @Test(expected = IllegalArgumentException.class)
+-    public void matchMaterialByNull() {
+-        Material.matchMaterial(null);
+-    }
+-
+-    @Test
+-    public void matchMaterialByName() {
+-        for (Material material : Material.values()) {
+-            assertThat(Material.matchMaterial(material.toString()), is(material));
+-        }
+-    }
+-
+-    @Test
+-    public void matchMaterialByKey() {
+-        for (Material material : Material.values()) {
+-            if (material.isLegacy()) {
+-                continue;
+-            }
+-            assertThat(Material.matchMaterial(material.getKey().toString()), is(material));
+-        }
+-    }
+-
+-    @Test
+-    public void matchMaterialByWrongNamespace() {
+-        for (Material material : Material.values()) {
+-            if (material.isLegacy()) {
+-                continue;
+-            }
+-            assertNull(Material.matchMaterial("bogus:" + material.getKey().getKey()));
+-        }
+-    }
+-
+-    @Test
+-    public void matchMaterialByLowerCaseAndSpaces() {
+-        for (Material material : Material.values()) {
+-            String name = material.toString().replaceAll("_", " ").toLowerCase(java.util.Locale.ENGLISH);
+-            assertThat(Material.matchMaterial(name), is(material));
+-        }
+-    }
+-}

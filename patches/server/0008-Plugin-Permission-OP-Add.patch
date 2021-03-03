@@ -1,0 +1,48 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TreeKR <johanbag290@gmail.com>
+Date: Wed, 3 Mar 2021 11:47:55 +0900
+Subject: [PATCH] Plugin Permission(OP) Add
+
+
+diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
+index b7a362bd9c5e9dae909b863335bae3a94d404a16..09eb1035d80cea31b102c9b92a4dcf0ae7260e22 100644
+--- a/src/main/java/net/minecraft/server/EntityLiving.java
++++ b/src/main/java/net/minecraft/server/EntityLiving.java
+@@ -1993,6 +1993,7 @@ public abstract class EntityLiving extends Entity {
+     }
+ 
+     public void swingHand(EnumHand enumhand, boolean flag) {
++        /*
+         if (!this.ai || this.ak >= this.m() / 2 || this.ak < 0) {
+             this.ak = -1;
+             this.ai = true;
+@@ -2008,6 +2009,7 @@ public abstract class EntityLiving extends Entity {
+                 }
+             }
+         }
++         */
+ 
+     }
+ 
+diff --git a/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java b/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java
+index 816fe77d83aa36e84e5cfd39c7e98aeedb4a9985..a2c75d5e51018beecebeaa53eaf2ffc01c622d74 100644
+--- a/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java
++++ b/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java
+@@ -28,7 +28,8 @@ public class KPaperConfig {
+     public static YamlConfiguration config;
+     static int version;
+     static Map<String, Command> commands;
+-    private static boolean verbose;
++    public static boolean verbose;
++    public static boolean pluginsCommandEnabledOnlyForOp;
+     private static boolean fatalError;
+     /*========================================================================*/
+     private static boolean metricsStarted;
+@@ -46,6 +47,7 @@ public class KPaperConfig {
+         config.options().header(HEADER);
+         config.options().copyDefaults(true);
+         verbose = getBoolean("verbose", false);
++        pluginsCommandEnabledOnlyForOp = getBoolean("pluginsCommandEnabledOnlyForOp", true);
+ 
+         version = getInt("config-version", 20);
+         set("config-version", 20);
