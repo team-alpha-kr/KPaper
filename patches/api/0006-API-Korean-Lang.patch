@@ -1,0 +1,98 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Mon, 8 Mar 2021 10:05:16 +0900
+Subject: [PATCH] API Korean Lang
+
+
+diff --git a/src/main/java/org/bukkit/command/defaults/HelpCommand.java b/src/main/java/org/bukkit/command/defaults/HelpCommand.java
+index 98027fdd8dbd2c0ed84a065f7b991738ee397a66..8a2d839b7e007c4dc73925ed250e27bddfc5b206 100644
+--- a/src/main/java/org/bukkit/command/defaults/HelpCommand.java
++++ b/src/main/java/org/bukkit/command/defaults/HelpCommand.java
+@@ -90,7 +90,7 @@ public class HelpCommand extends BukkitCommand {
+         header.append(ChatColor.YELLOW);
+         header.append("--------- ");
+         header.append(ChatColor.WHITE);
+-        header.append("Help: ");
++        header.append("도움말: ");
+         header.append(topic.getName());
+         header.append(" ");
+         if (page.getTotalPages() > 1) {
+diff --git a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
+index 0c7ba0718de2b93d013968ca0fec34ffd423990f..778082fdbf774ad50fe80f69b39bf94819bd7312 100644
+--- a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
++++ b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
+@@ -44,15 +44,15 @@ public class ReloadCommand extends BukkitCommand {
+             }
+         }
+         if (!confirmed) {
+-            Command.broadcastCommandMessage(sender, ChatColor.RED + "Are you sure you wish to reload your server? Doing so may cause bugs and memory leaks. It is recommended to restart instead of using /reload. To confirm, please type " + ChatColor.YELLOW + "/reload confirm");
++            Command.broadcastCommandMessage(sender, ChatColor.RED + "서버를 리로드할까요? 버그나 메모리 리스크가 발생할수있습니다.. 서버 재시작을 권장하고있습니다 /reload를 계속 진행하시려면 " + ChatColor.YELLOW + "/reload confirm");
+             return true;
+         }
+         // Paper end
+ 
+-        Command.broadcastCommandMessage(sender, ChatColor.RED + "Please note that this command is not supported and may cause issues when using some plugins.");
+-        Command.broadcastCommandMessage(sender, ChatColor.RED + "If you encounter any issues please use the /stop command to restart your server.");
++        Command.broadcastCommandMessage(sender, ChatColor.RED + "일부 플러그인은 리로드를 지원하지 않을수있어요!");
++        Command.broadcastCommandMessage(sender, ChatColor.RED + "만약 문제가 발생할시 /stop커맨드로 서버를 정지해주세요!");
+         Bukkit.reload();
+-        Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Reload complete.");
++        Command.broadcastCommandMessage(sender, ChatColor.GREEN + "리로드를 완료했어요!");
+ 
+         return true;
+     }
+diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
+index c1f64d31835bd9cd86f807c77cdb86190f4709b0..b39c3607fd3ef81fd52161fc3419cea258e8bc86 100644
+--- a/src/main/java/org/bukkit/command/defaults/VersionCommand.java
++++ b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
+@@ -40,7 +40,7 @@ public class VersionCommand extends BukkitCommand {
+         super(name);
+ 
+         this.description = "Gets the version of this server including any plugins in use";
+-        this.usageMessage = "/version [plugin name]";
++        this.usageMessage = "/version [플러그인 이름]";
+         this.setPermission("bukkit.command.version");
+         this.setAliases(Arrays.asList("ver", "about"));
+     }
+@@ -50,7 +50,7 @@ public class VersionCommand extends BukkitCommand {
+         if (!testPermission(sender)) return true;
+ 
+         if (args.length == 0) {
+-            sender.sendMessage("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")");
++            sender.sendMessage("현재 서버는 " + Bukkit.getName() + " 버전 " + Bukkit.getVersion() + "을 구동중입니다. (API버전 " + Bukkit.getBukkitVersion() + ")");
+             sendVersion(sender);
+         } else {
+             StringBuilder name = new StringBuilder();
+@@ -96,19 +96,19 @@ public class VersionCommand extends BukkitCommand {
+         }
+ 
+         if (desc.getWebsite() != null) {
+-            sender.sendMessage("Website: " + ChatColor.GREEN + desc.getWebsite());
++            sender.sendMessage("웹사이트: " + ChatColor.GREEN + desc.getWebsite());
+         }
+ 
+         if (!desc.getAuthors().isEmpty()) {
+             if (desc.getAuthors().size() == 1) {
+-                sender.sendMessage("Author: " + getNameList(desc.getAuthors()));
++                sender.sendMessage("만든이: " + getNameList(desc.getAuthors()));
+             } else {
+-                sender.sendMessage("Authors: " + getNameList(desc.getAuthors()));
++                sender.sendMessage("제작진: " + getNameList(desc.getAuthors()));
+             }
+         }
+ 
+         if (!desc.getContributors().isEmpty()) {
+-            sender.sendMessage("Contributors: " + getNameList(desc.getContributors()));
++            sender.sendMessage("기여자: " + getNameList(desc.getContributors()));
+         }
+     }
+ 
+@@ -178,7 +178,7 @@ public class VersionCommand extends BukkitCommand {
+                 return;
+             }
+             versionWaiters.add(sender);
+-            sender.sendMessage("Checking version, please wait...");
++            sender.sendMessage("버전 확인중...");
+             if (!versionTaskStarted) {
+                 versionTaskStarted = true;
+                 new Thread(new Runnable() {
