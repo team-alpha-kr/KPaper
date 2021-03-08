@@ -1,0 +1,28 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Mon, 8 Mar 2021 08:52:34 +0900
+Subject: [PATCH] Entity Scoreboard Enable
+
+
+diff --git a/src/main/java/net/minecraft/server/ScoreboardServer.java b/src/main/java/net/minecraft/server/ScoreboardServer.java
+index 929397a4ca8af8aba24c36bd6fc8ed0071982b64..fff21b27044015fa855587b8feae9c0950790a98 100644
+--- a/src/main/java/net/minecraft/server/ScoreboardServer.java
++++ b/src/main/java/net/minecraft/server/ScoreboardServer.java
+@@ -179,7 +179,7 @@ public class ScoreboardServer extends Scoreboard {
+ 
+         while (iterator.hasNext()) {
+             EntityPlayer entityplayer = (EntityPlayer) iterator.next();
+-            if (entityplayer.getBukkitEntity().getScoreboard().getHandle() != this) continue; // CraftBukkit - Only players on this board
++            //if (entityplayer.getBukkitEntity().getScoreboard().getHandle() != this) continue; // CraftBukkit - Only players on this board
+             Iterator iterator1 = list.iterator();
+ 
+             while (iterator1.hasNext()) {
+@@ -212,7 +212,7 @@ public class ScoreboardServer extends Scoreboard {
+ 
+         while (iterator.hasNext()) {
+             EntityPlayer entityplayer = (EntityPlayer) iterator.next();
+-            if (entityplayer.getBukkitEntity().getScoreboard().getHandle() != this) continue; // CraftBukkit - Only players on this board
++            //if (entityplayer.getBukkitEntity().getScoreboard().getHandle() != this) continue; // CraftBukkit - Only players on this board // KPaper - Enable Entity Scoreboard
+             Iterator iterator1 = list.iterator();
+ 
+             while (iterator1.hasNext()) {
