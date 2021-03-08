@@ -5,7 +5,7 @@ Subject: [PATCH] 03-07 Lang Patch
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f3045975c7e50d451ad7984292eff15c144d78d4..5da99bb52edc12ca25e893579a23f148afb5a585 100644
+index 6202e18268d9cd50312a73d86479426688c2e927..e91209d5fb6f36497772febc3597ce157a04708b 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -953,13 +953,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas

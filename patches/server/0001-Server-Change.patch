@@ -81,7 +81,7 @@ index dee00aac05f1acf050f05d4db557a08dd0f301c8..4b3100f6e4638e09d0f1cc0a6d00067b
                  metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
                      Map<String, Map<String, Integer>> map = new HashMap<>();
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d6ca2ac9a5047b8d6840c8b4985ab75f35bea919..0c014301956f85b8126f4a7b35cce3bb17d021cc 100644
+index 9b0d9bc24ec2f9edf4867553325ef753e61d1a02..afbc8b76398f78a83c63e208a241bd45b9ccf91f 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -614,7 +614,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas

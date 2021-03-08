@@ -14,11 +14,11 @@ index 694e6df02c8225fee2ce0daa9860794b6ecf521f..28bc5b15e179de364175dd4bcf6c4009
  import org.bukkit.event.player.PlayerItemConsumeEvent;
 +import xyz.alphakr.kpaper.KPaperConfig;
  // CraftBukkit end
-
-
+ 
+ 
 @@ -1993,23 +1994,23 @@ public abstract class EntityLiving extends Entity {
      }
-
+ 
      public void swingHand(EnumHand enumhand, boolean flag) {
 -        /*
 -        if (!this.ai || this.ak >= this.m() / 2 || this.ak < 0) {
@@ -51,9 +51,9 @@ index 694e6df02c8225fee2ce0daa9860794b6ecf521f..28bc5b15e179de364175dd4bcf6c4009
              }
          }
 -         */
-
+ 
      }
-
+ 
 diff --git a/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java b/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java
 index a2c75d5e51018beecebeaa53eaf2ffc01c622d74..73eeabfbc89c6e557e2347c57b963c87298b5213 100644
 --- a/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java
@@ -71,6 +71,6 @@ index a2c75d5e51018beecebeaa53eaf2ffc01c622d74..73eeabfbc89c6e557e2347c57b963c87
          verbose = getBoolean("verbose", false);
          pluginsCommandEnabledOnlyForOp = getBoolean("pluginsCommandEnabledOnlyForOp", true);
 +        handSwingDisabled = getBoolean("handSwingDisabled", true);
-
+ 
          version = getInt("config-version", 20);
          set("config-version", 20);
