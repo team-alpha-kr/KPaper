@@ -11,6 +11,7 @@
 `git clone https://github.com/team-alpha-kr/KPaper.git`
 
 ### 2. 패치
+**Pull 할 때 마다 패치를 해주어야됩니다.**\
 터미널을 그 Clone이 된 위치로 열어주세요.\
 그다음에 업스트림을 패치하세요. 업스트림은 자동으로 가져와져요!\
 `./kpaper patch`
