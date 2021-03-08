@@ -1,0 +1,76 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TreeKR <johanbag290@gmail.com>
+Date: Mon, 8 Mar 2021 09:59:21 +0900
+Subject: [PATCH] Config HandSwingDisabled Add
+
+
+diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
+index 694e6df02c8225fee2ce0daa9860794b6ecf521f..28bc5b15e179de364175dd4bcf6c40091f7f6e20 100644
+--- a/src/main/java/net/minecraft/server/EntityLiving.java
++++ b/src/main/java/net/minecraft/server/EntityLiving.java
+@@ -42,6 +42,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
+ import org.bukkit.event.entity.EntityResurrectEvent;
+ import org.bukkit.event.entity.EntityTeleportEvent;
+ import org.bukkit.event.player.PlayerItemConsumeEvent;
++import xyz.alphakr.kpaper.KPaperConfig;
+ // CraftBukkit end
+ 
+ 
+@@ -1993,23 +1994,23 @@ public abstract class EntityLiving extends Entity {
+     }
+ 
+     public void swingHand(EnumHand enumhand, boolean flag) {
+-        /*
+-        if (!this.ai || this.ak >= this.m() / 2 || this.ak < 0) {
+-            this.ak = -1;
+-            this.ai = true;
+-            this.aj = enumhand;
+-            if (this.world instanceof WorldServer) {
+-                PacketPlayOutAnimation packetplayoutanimation = new PacketPlayOutAnimation(this, enumhand == EnumHand.MAIN_HAND ? 0 : 3);
+-                ChunkProviderServer chunkproviderserver = ((WorldServer) this.world).getChunkProvider();
+-
+-                if (flag) {
+-                    chunkproviderserver.broadcastIncludingSelf(this, packetplayoutanimation);
+-                } else {
+-                    chunkproviderserver.broadcast(this, packetplayoutanimation);
++        if(!KPaperConfig.handSwingDisabled) {
++            if (!this.ai || this.ak >= this.m() / 2 || this.ak < 0) {
++                this.ak = -1;
++                this.ai = true;
++                this.aj = enumhand;
++                if (this.world instanceof WorldServer) {
++                    PacketPlayOutAnimation packetplayoutanimation = new PacketPlayOutAnimation(this, enumhand == EnumHand.MAIN_HAND ? 0 : 3);
++                    ChunkProviderServer chunkproviderserver = ((WorldServer) this.world).getChunkProvider();
++
++                    if (flag) {
++                        chunkproviderserver.broadcastIncludingSelf(this, packetplayoutanimation);
++                    } else {
++                        chunkproviderserver.broadcast(this, packetplayoutanimation);
++                    }
+                 }
+             }
+         }
+-         */
+ 
+     }
+ 
+diff --git a/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java b/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java
+index a2c75d5e51018beecebeaa53eaf2ffc01c622d74..73eeabfbc89c6e557e2347c57b963c87298b5213 100644
+--- a/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java
++++ b/src/main/java/xyz/alphakr/kpaper/KPaperConfig.java
+@@ -30,6 +30,7 @@ public class KPaperConfig {
+     static Map<String, Command> commands;
+     public static boolean verbose;
+     public static boolean pluginsCommandEnabledOnlyForOp;
++    public static boolean handSwingDisabled;
+     private static boolean fatalError;
+     /*========================================================================*/
+     private static boolean metricsStarted;
+@@ -48,6 +49,7 @@ public class KPaperConfig {
+         config.options().copyDefaults(true);
+         verbose = getBoolean("verbose", false);
+         pluginsCommandEnabledOnlyForOp = getBoolean("pluginsCommandEnabledOnlyForOp", true);
++        handSwingDisabled = getBoolean("handSwingDisabled", true);
+ 
+         version = getInt("config-version", 20);
+         set("config-version", 20);

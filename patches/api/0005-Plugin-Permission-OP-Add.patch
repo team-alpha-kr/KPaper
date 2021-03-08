@@ -5,10 +5,10 @@ Subject: [PATCH] Plugin Permission(OP) Add
 
 
 diff --git a/pom.xml b/pom.xml
-index b19b957c00a308a65332552364286114e58c96db..e0ca16b8365595d3249978c933f7ca215f345204 100644
+index e33742381675fa465ac7cc2663a67bc53eeb385f..2ce7fd83eba230ce952abb21c6072c90f3ff800a 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -146,6 +146,12 @@
+@@ -178,6 +178,12 @@
              <artifactId>asm-commons</artifactId>
              <version>9.0</version>
          </dependency>
