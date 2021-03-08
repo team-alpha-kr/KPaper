@@ -39,10 +39,10 @@ index c6ea429819c07e7f4bc257cad73463a030767825..784f0ac5230badd14b420267a528d713
          }
      }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 6854a0a25f7631f3f746b36264fe4bb592cf2667..2cc950f20f89e031ff11925e5c96f20f4135fbe7 100644
+index 0c014301956f85b8126f4a7b35cce3bb17d021cc..31e91684f534ce96c11fc17bceb7f3997d97c6ee 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -941,14 +941,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -946,14 +946,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
                  // Spigot start
                  // Paper start - move done tracking
@@ -59,7 +59,7 @@ index 6854a0a25f7631f3f746b36264fe4bb592cf2667..2cc950f20f89e031ff11925e5c96f20f
                  // Paper end
  
                  PaperJvmChecker.checkJvm(); // Paper jvm version nag
-@@ -964,7 +964,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -969,7 +969,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                          long j = i / 50L;
  
                          if (server.getWarnOnOverload()) // CraftBukkit
@@ -68,7 +68,7 @@ index 6854a0a25f7631f3f746b36264fe4bb592cf2667..2cc950f20f89e031ff11925e5c96f20f
                          this.nextTick += j * 50L;
                          this.lastOverloadTime = this.nextTick;
                      }
-@@ -1450,7 +1450,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1455,7 +1455,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -78,10 +78,10 @@ index 6854a0a25f7631f3f746b36264fe4bb592cf2667..2cc950f20f89e031ff11925e5c96f20f
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2193405090560c319e6defddbbdaaeaba0085928..67e753dc4360a5e550e04d0b237799ae98b5ee27 100644
+index e9d6db022f196bf98ecc7c80bf34ae54cddd1126..ac1ad5ea2c9135c3414f63268a51a179958c0f74 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -388,7 +388,7 @@ public final class CraftServer implements Server {
+@@ -389,7 +389,7 @@ public final class CraftServer implements Server {
              Plugin[] plugins = pluginManager.loadPlugins(pluginFolder);
              for (Plugin plugin : plugins) {
                  try {

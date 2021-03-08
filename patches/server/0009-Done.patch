@@ -1,0 +1,20 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Sun, 7 Mar 2021 11:18:50 +0900
+Subject: [PATCH] Done
+
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 5da99bb52edc12ca25e893579a23f148afb5a585..1dea6714cbc73f5ab57a9b753b6d1969cc6e19f8 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -960,7 +960,8 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+ 		LOGGER.info("*");
+ 		LOGGER.info("* 현재 상태 : [ 부팅 완료 ]");
+ 		LOGGER.info("********************************");
+-		LOGGER.info("Done! ({})", doneTime);
++		LOGGER.info("Done ({})! For help, type \"help\"", doneTime);
++		//LOGGER.info("Done! ({})", doneTime);
+ 		// KPaper end
+                 // Paper end
+ 
