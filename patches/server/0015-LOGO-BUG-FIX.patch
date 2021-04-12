@@ -1,0 +1,29 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Sun, 11 Apr 2021 17:37:15 +0900
+Subject: [PATCH] LOGO BUG FIX
+
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 14ba99b52bbbb9955763ab279c75e8230b51f4bc..e12399bc8775715af2f7294f71a1232f97904c49 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -956,12 +956,12 @@ S
+ 		String doneTime = String.format(java.util.Locale.ROOT, "%.3fs", (double) (SystemUtils.getMonotonicNanos() - serverStartTime) / 1.0E9D);
+                 LOGGER.info("********************************");
+ 		LOGGER.info("*");
+-		LOGGER.info(" ____  __.__________                             ")
+-		LOGGER.info("|    |/ _|\\______   \\_____  ______   ___________ ")
+-		LOGGER.info("|      <   |     ___/\\__  \\ \\____ \\_/ __ \\_  __ \")
+-		LOGGER.info("|    |  \\  |    |     / __ \\|  |_> >  ___/|  | \\/")
+-		LOGGER.info("|____|__ \\ |____|    (____  /   __/ \\___  >__|   ")
+-		LOGGER.info("        \\/                \\/|__|        \\/       ")
++		LOGGER.info(" ____  __.__________                             ");
++		LOGGER.info("|    |/ _|\\______   \\_____  ______   ___________ ");
++		LOGGER.info("|      <   |     ___/\\__  \\ \\____ \\_/ __ \\_  __\");
++		LOGGER.info("|    |  \\  |    |     / __ \\|  |_> >  ___/|  | \\/")'
++		LOGGER.info("|____|__ \\ |____|    (____  /   __/ \\___  >__|   ")'
++		LOGGER.info("        \\/                \\/|__|        \\/       ")'
+ 		LOGGER.info("*");
+ 		LOGGER.info("* 현재 상태 : [ 부팅 완료 ]");
+ 		LOGGER.info("********************************");

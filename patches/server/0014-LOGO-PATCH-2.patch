@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Sat, 20 Mar 2021 13:10:41 +0900
+Subject: [PATCH] LOGO PATCH 2
+
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 2a5c2f1def951cb8b41c190beabddcb345499a24..14ba99b52bbbb9955763ab279c75e8230b51f4bc 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -681,7 +681,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+                 MinecraftServer.LOGGER.warn("Something went wrong url encoding {}", s);
+             }
+         }
+-
++S
+     }
+ 
+     public EnumGamemode getGamemode() {
+@@ -924,7 +924,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+             total = total.add(x.multiply(dec(t)));
+             if (++index == size) {
+                 index = 0;
+-            }
++
+         }
+ 
+         public double getAverage() {
+@@ -956,7 +956,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+ 		String doneTime = String.format(java.util.Locale.ROOT, "%.3fs", (double) (SystemUtils.getMonotonicNanos() - serverStartTime) / 1.0E9D);
+                 LOGGER.info("********************************");
+ 		LOGGER.info("*");
+-		LOGGER.info("*           KPAPER");
++		LOGGER.info(" ____  __.__________                             ")
++		LOGGER.info("|    |/ _|\\______   \\_____  ______   ___________ ")
++		LOGGER.info("|      <   |     ___/\\__  \\ \\____ \\_/ __ \\_  __ \")
++		LOGGER.info("|    |  \\  |    |     / __ \\|  |_> >  ___/|  | \\/")
++		LOGGER.info("|____|__ \\ |____|    (____  /   __/ \\___  >__|   ")
++		LOGGER.info("        \\/                \\/|__|        \\/       ")
+ 		LOGGER.info("*");
+ 		LOGGER.info("* 현재 상태 : [ 부팅 완료 ]");
+ 		LOGGER.info("********************************");

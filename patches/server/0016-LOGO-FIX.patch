@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Mon, 12 Apr 2021 20:23:19 +0900
+Subject: [PATCH] LOGO FIX
+
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index e12399bc8775715af2f7294f71a1232f97904c49..5a8e849f4ba09ea30ad8197e4d88364ea8295d00 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -958,7 +958,7 @@ S
+ 		LOGGER.info("*");
+ 		LOGGER.info(" ____  __.__________                             ");
+ 		LOGGER.info("|    |/ _|\\______   \\_____  ______   ___________ ");
+-		LOGGER.info("|      <   |     ___/\\__  \\ \\____ \\_/ __ \\_  __\");
++		LOGGER.info("|      <   |     ___/\\__  \\ \\____ \\_/ __ \\_  __\ ");
+ 		LOGGER.info("|    |  \\  |    |     / __ \\|  |_> >  ___/|  | \\/")'
+ 		LOGGER.info("|____|__ \\ |____|    (____  /   __/ \\___  >__|   ")'
+ 		LOGGER.info("        \\/                \\/|__|        \\/       ")'
