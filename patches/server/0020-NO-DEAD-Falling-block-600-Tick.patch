@@ -1,0 +1,52 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: norhu1130 <norhu1130@naver.com>
+Date: Wed, 14 Apr 2021 13:49:49 +0900
+Subject: [PATCH] NO DEAD Falling block(600 Tick)
+
+
+diff --git a/src/main/java/net/minecraft/server/EntityFallingBlock.java b/src/main/java/net/minecraft/server/EntityFallingBlock.java
+index 76aac1b131f314775e418339e434f4f2da2ad619..c935016f6548266de97563f3779ee6e46b6322c2 100644
+--- a/src/main/java/net/minecraft/server/EntityFallingBlock.java
++++ b/src/main/java/net/minecraft/server/EntityFallingBlock.java
+@@ -122,8 +122,8 @@ public class EntityFallingBlock extends Entity {
+                     }
+                 }
+ 
+-                if (!this.onGround && !flag1) {
+-                    if (!this.world.isClientSide && (this.ticksLived > 100 && (blockposition.getY() < 1 || blockposition.getY() > 256) || this.ticksLived > 600)) {
++                if (!this.onGround && !flag1) 
++                    if (!this.world.isClientSide && (this.ticksLived > 100 && (blockposition.getY() < 1 || blockposition.getY() > 256) )) {
+                         if (this.dropItem && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+                             this.a((IMaterial) block);
+                         }
+diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
+index 6be12b7ae8501c22a7c544638c44fc6faedd5b07..672b27e1c61d6ca0f95ace7bad57392314aab8bf 100644
+--- a/src/main/java/net/minecraft/server/LoginListener.java
++++ b/src/main/java/net/minecraft/server/LoginListener.java
+@@ -174,7 +174,7 @@ public class LoginListener implements PacketLoginInListener {
+ 
+     @Override
+     public void a(IChatBaseComponent ichatbasecomponent) {
+-        LoginListener.LOGGER.info("{} lost connection: {}", this.d(), ichatbasecomponent.getString());
++        LoginListener.LOGGER.info("{} 연결 상실: {}", this.d(), ichatbasecomponent.getString());
+     }
+ 
+     public String d() {
+@@ -206,7 +206,7 @@ public class LoginListener implements PacketLoginInListener {
+                         initUUID();
+                         new LoginHandler().fireEvents();
+                     } catch (Exception ex) {
+-                        disconnect("Failed to verify username!");
++                        disconnect("유저이름 검증 실패!");
+                         server.server.getLogger().log(java.util.logging.Level.WARNING, "Exception verifying " + i.getName(), ex);
+                     }
+                 }
+@@ -277,7 +277,7 @@ public class LoginListener implements PacketLoginInListener {
+                     }
+                     // CraftBukkit start - catch all exceptions
+                 } catch (Exception exception) {
+-                    disconnect("Failed to verify username!");
++                    disconnect("유저이름 검증 실패!");
+                     server.server.getLogger().log(java.util.logging.Level.WARNING, "Exception verifying " + gameprofile.getName(), exception);
+                     // CraftBukkit end
+                 }
